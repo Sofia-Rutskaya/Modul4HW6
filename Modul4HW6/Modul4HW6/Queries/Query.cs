@@ -17,17 +17,48 @@ namespace Modul4HW6.Queries
         {
             var data = await _context.Songs
                 .Include(i => i.Genre)
-                .Select(i => new
-                {
-                    Tittle = i.Tittle,
-                    Genre = i.Genre.Title,
-                    Name = i.Artists.Count(),
-                })
+                .Include(s => s.Artists)
                 .ToListAsync();
 
             foreach (var item in data)
             {
-                Console.WriteLine($"Tittle: {item.Tittle}, Artist: {item.Name}, Genre: {item.Genre}");
+                Console.Write($"Tittle: {item.Tittle}, Genre: {item.Genre.Title}");
+                foreach (var artist in item.Artists)
+                {
+                    Console.Write($" Artist: {artist.Name}{Environment.NewLine}");
+                }
+            }
+        }
+
+        public async Task Second()
+        {
+            var data = await _context.Genres
+                .Include(i => i.Songs)
+                .ToListAsync();
+
+            foreach (var item in data)
+            {
+                Console.WriteLine($"Genre: {item.Title}, Count of songs{item.Songs.Count()}");
+            }
+        }
+
+        public async Task Third()
+        {
+            var data = await _context.Artists
+                .Include(i => i.Songs)
+                .Select(s => new
+                {
+                    DateOfBirth = s.DateOfBirth,
+                    Song = s.Songs.Select(d => d.ReleasedDate).FirstOrDefault(),
+                    Tittle = s.Name
+                })
+                .Where(s => (s.DateOfBirth > s.Song))
+                .ToListAsync();
+
+            foreach (var item in data)
+            {
+                Console.Write($"{item.DateOfBirth}");
+                Console.WriteLine($" {item.Song} {item.Tittle}");
             }
         }
     }

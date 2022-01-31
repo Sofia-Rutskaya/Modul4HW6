@@ -13,6 +13,12 @@ public class Program
             var info = new AddInfoDb(db);
             var transact = new TransactionCreate();
             await transact.AddTransaction(args, async () => await info.CheckDb(args));
+
+            var queries = new Query(db);
+
+            await transact.AddTransaction(args, async () => await queries.First());
+            await transact.AddTransaction(args, async () => await queries.Second());
+            await transact.AddTransaction(args, async () => await queries.Third());
         }
 
         Console.WriteLine("Done");

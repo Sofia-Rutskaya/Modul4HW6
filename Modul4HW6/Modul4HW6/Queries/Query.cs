@@ -20,6 +20,9 @@ namespace Modul4HW6.Queries
                 .Include(s => s.Artists)
                 .ToListAsync();
 
+            Console.WriteLine("Вывести название песни, имя исполнителя, название жанра песни. " +
+                $"Вывести только песни у которых есть жанр и которые поет существующий исполнитель.{Environment.NewLine}");
+
             foreach (var item in data)
             {
                 Console.Write($"Tittle: {item.Tittle}, Genre: {item.Genre.Title}");
@@ -36,29 +39,33 @@ namespace Modul4HW6.Queries
                 .Include(i => i.Songs)
                 .ToListAsync();
 
+            Console.WriteLine($"Вывести кол-во песен в каждом жанре.{Environment.NewLine}");
             foreach (var item in data)
             {
-                Console.WriteLine($"Genre: {item.Title}, Count of songs{item.Songs.Count()}");
+                Console.WriteLine($"Genre: {item.Title}, Count of songs: {item.Songs.Count()}");
             }
         }
 
         public async Task Third()
         {
-            var data = await _context.Artists
-                .Include(i => i.Songs)
+            var dateRealise = await _context.Artists
+                .Where(a => a.Songs.Count() > 0)
+                .MaxAsync(a => a.DateOfBirth);
+
+            var data = await _context.Songs
                 .Select(s => new
                 {
-                    DateOfBirth = s.DateOfBirth,
-                    Song = s.Songs.Select(d => d.ReleasedDate).FirstOrDefault(),
-                    Tittle = s.Name
+                    Tittle = s.Tittle,
+                    Date = s.ReleasedDate
                 })
-                .Where(s => (s.DateOfBirth > s.Song))
+                .Where(s => s.Date < dateRealise)
                 .ToListAsync();
+
+            Console.WriteLine($"Вывести песни, которые были написаны (ReleasedDate) до рождения самого молодого исполнителя.{Environment.NewLine}");
 
             foreach (var item in data)
             {
-                Console.Write($"{item.DateOfBirth}");
-                Console.WriteLine($" {item.Song} {item.Tittle}");
+                Console.WriteLine($"{item.Tittle}  --  {item.Date}");
             }
         }
     }

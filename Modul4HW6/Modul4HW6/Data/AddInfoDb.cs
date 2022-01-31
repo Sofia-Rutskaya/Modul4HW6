@@ -37,7 +37,7 @@ namespace Modul4HW6.Data
                 {
                     Name = "Adel",
                     Email = "adel@gmail.com",
-                    DateOfBirth = new DateTime(1988, 11, 19),
+                    DateOfBirth = new DateTime(1975, 11, 19),
                     Phone = 0823452842,
                     InstagramUrl = "https:///www.instagram.com/Adel"
                 },
@@ -53,7 +53,7 @@ namespace Modul4HW6.Data
                 {
                     Name = "Billie Eilish",
                     Email = "billie_eilish@gmail.com",
-                    DateOfBirth = new DateTime(1988, 05, 24),
+                    DateOfBirth = new DateTime(2002, 05, 24),
                     Phone = 1589853404,
                     InstagramUrl = "https:///www.instagram.com/billie_eilish"
                 },
@@ -61,7 +61,7 @@ namespace Modul4HW6.Data
                 {
                     Name = "Melanie Martinez",
                     Email = "melanie_martinez@gmail.com",
-                    DateOfBirth = new DateTime(1988, 05, 24),
+                    DateOfBirth = new DateTime(1999, 05, 24),
                     Phone = 1589853404,
                     InstagramUrl = "https:///www.instagram.com/melanie_martinez"
                 },
@@ -109,7 +109,7 @@ namespace Modul4HW6.Data
                     new SongEntity
                     {
                         Duration = "03:39",
-                        ReleasedDate = new DateTime(2017, 08, 12),
+                        ReleasedDate = new DateTime(2000, 08, 12),
                         Tittle = "Human",
                         GenreId = 5,
                     }
